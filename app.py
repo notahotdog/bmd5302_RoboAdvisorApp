@@ -796,14 +796,22 @@ def main():
 
                 # Check if data length is sufficient for the initial window
                 if len(full_returns) > start_index: # Use start_index here, as loop starts from it
+                    progress_bar = st.progress(0)
+                    status_text = st.empty()
+                    total_steps = len(full_returns) - start_index
+
                     with st.spinner(f"Running backtest (Min Window: {min_window_size} days)..."):
                         # Loop through the data, starting after the minimum window period
                         # The loop index 'i' represents the day whose return we are calculating,
                         # using data up to 'i-1'.
                         for i in range(start_index, len(full_returns)):
-                            # Get all return data from the beginning up to the current point (exclusive)
-                            window_returns_raw = full_returns.iloc[0 : i]
+                
+                            current_date = full_returns.index[i]              
+                            progress = (i - start_index + 1) / total_steps
+                            progress_bar.progress(progress)
+                            status_text.text(f"Running backtest... {progress*100:.0f}% ({current_date.strftime('%Y-%m-%d')})")
 
+                            window_returns_raw = full_returns.iloc[0 : i]       
                             # --- Identify valid funds for optimization within the window ---
                             # A fund is valid if it has enough non-NaN returns AND non-zero variance in the window
                             valid_funds_mask = (window_returns_raw.notna().sum() >= min_window_size // 2) & \
