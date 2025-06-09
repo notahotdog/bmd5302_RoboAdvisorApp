@@ -46,7 +46,7 @@ The application uses historical NAV data for 15 investment funds from various as
 
 ### Installing Dependencies
 ```bash
-pip install streamlit pandas numpy scipy plotly matplotlib
+pip install -r requirements.txt
 ```
 
 ### File Structure

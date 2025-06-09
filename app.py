@@ -758,13 +758,7 @@ def main():
                 st.metric("Net Market Exposure", f"{net_exposure:.2f}%")
 
 
-
-
-
             ## New VERSION 2 
-
-
-
 
             # Add section for historical performance
             # modification1: use only historical data at each time step to calculate returns, covariance; not the full data.
